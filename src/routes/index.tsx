@@ -4,7 +4,9 @@ import Counter from "~/components/Counter";
 import { ComlinkWorker } from "~/lib/comlink-worker";
 import { heavyDuty, heavyDutyAsync } from "~/lib/heavy-duty";
 
-function ActionState(props: { state: Accessor<"running" | "idle"> }) {
+type WorkerState = "running" | "idle";
+
+function ActionState(props: { state: Accessor<WorkerState> }) {
   return (
     <Show when={props.state() === "running"} fallback="Trigger">
       <span>Running...</span>
@@ -13,15 +15,9 @@ function ActionState(props: { state: Accessor<"running" | "idle"> }) {
 }
 
 export default function Home() {
-  const [justHandlerAction, setJustHandlerState] = createSignal<
-    "running" | "idle"
-  >("idle");
-  const [promisedAction, setPromisedState] = createSignal<"running" | "idle">(
-    "idle"
-  );
-  const [workerAction, setWorkerState] = createSignal<"running" | "idle">(
-    "idle"
-  );
+  const [syncHandler, setSyncHandler] = createSignal<WorkerState>("idle");
+  const [promisedAction, setPromisedState] = createSignal<WorkerState>("idle");
+  const [workerAction, setWorkerState] = createSignal<WorkerState>("idle");
   return (
     <main class="text-center mx-auto text-gray-700 p-4">
       <h1 class="max-6-xs text-6xl dark:text-sky-300 font-bold my-16">
@@ -31,15 +27,15 @@ export default function Home() {
         <button
           class="w-[200px] rounded-full bg-rose-400 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem] disabled:opacity-55"
           onClick={() => {
-            setJustHandlerState("running");
+            setSyncHandler("running");
 
             heavyDuty("Sync");
-            setJustHandlerState("idle");
+            setSyncHandler("idle");
           }}
-          disabled={justHandlerAction() === "running"}
+          disabled={syncHandler() === "running"}
         >
           Sync::
-          <ActionState state={justHandlerAction} />
+          <ActionState state={syncHandler} />
         </button>
         <button
           class="w-[200px] rounded-full bg-rose-400 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem] disabled:opacity-55"
