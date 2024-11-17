@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  @apply bg-neutral-200;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @apply bg-neutral-900;
+  }
+}
