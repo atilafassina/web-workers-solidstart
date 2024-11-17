@@ -29,10 +29,10 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "pnpm install"
+        run: "npm install"
 
       - name: Build step
-        run: "NITRO_PRESET=deno-deploy pnpm run build"
+        run: "NITRO_PRESET=deno-deploy npm run build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
