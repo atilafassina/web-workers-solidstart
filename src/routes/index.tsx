@@ -23,7 +23,7 @@ export default function Home() {
       <h1 class="max-6-xs text-6xl dark:text-sky-300 font-bold my-16">
         Web-Workers
       </h1>
-      <div class="grid grid-cols-3 grid-rows-2 gap-10 place-items-center">
+      <div class="flex flex-col gap-10 place-items-center">
         <button
           class="w-[200px] rounded-full bg-rose-400 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem] disabled:opacity-55"
           onClick={() => {
